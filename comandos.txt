@@ -1,1 +1,2 @@
 sudo django admin startproject saludo
+python3 manage.py startapp clientes
