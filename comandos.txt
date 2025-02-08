@@ -1,2 +1,14 @@
 sudo django admin startproject saludo
-python3 manage.py startapp clientes
+python manage.py startapp saludo_app
+
+4. Registramos la app. Abre saludo/settings.py y agrega 'saludo_app' a INSTALLED_APPS:
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'saludo_app',  # Agregamos nuestra app
+]
