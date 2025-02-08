@@ -1,5 +1,5 @@
 sudo django admin startproject saludo
-python manage.py startapp saludo_app
+python3 manage.py startapp saludo_app
 
 4. Registramos la app. Abre saludo/settings.py y agrega 'saludo_app' a INSTALLED_APPS:
 
