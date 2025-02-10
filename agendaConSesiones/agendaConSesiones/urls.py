@@ -19,5 +19,6 @@ from agenda_app.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", index, name="index")
+    path("", index, name="index")  # Aquí se mapea la vista 'index' a la URL '/'
 ]
+
