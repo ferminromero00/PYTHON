@@ -1,5 +1,5 @@
-from django.db import forms
+from django import forms
 
 class Formulario(forms.Form):
-    descripcion=forms.textField()
+    descripcion=forms.CharField()
     fecha = forms.DateField()

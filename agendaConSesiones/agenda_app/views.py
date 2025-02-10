@@ -5,7 +5,7 @@ from agenda_app.models import Cita
 # Create your views here.
 def index(request):
     if "agenda" not in request.session:
-        request.session = []
+        request.session["agenda"] = []
     
     if request.method == "POST":
         form = Formulario(request.POST)
