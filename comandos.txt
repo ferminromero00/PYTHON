@@ -1,5 +1,14 @@
-sudo django admin startproject saludo
-python3 manage.py startapp saludo_app
+1. Creamos el proyecto:
+
+django-admin startproject saludo
+
+2. Entramos en la carpeta del proyecto:
+
+cd saludo
+
+3. Creamos una app (Componente con sus propias vistas, templates, urls, modelos, etc, como podría ser una gestión de artículos):
+
+python manage.py startapp saludo_app
 
 4. Registramos la app. Abre saludo/settings.py y agrega 'saludo_app' a INSTALLED_APPS:
 
@@ -12,3 +21,65 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'saludo_app',  # Agregamos nuestra app
 ]
+
+5. Creamos el formulario en saludo_app/forms.py
+
+from django import forms
+
+class MiFormulario(forms.Form):
+    nombre = forms.CharField(label="Tu nombre", max_length=100)
+
+6. Creamos la vista editando saludo_app/views.py:
+
+from django.shortcuts import render
+from .forms import MiFormulario
+
+def formulario_vista(request):
+    nombre = ""
+
+    if request.method == "POST":
+        form = MiFormulario(request.POST)
+        if form.is_valid():
+            nombre = form.cleaned_data["nombre"]  
+    else:
+        form = MiFormulario()
+
+    return render(request, "formulario.html", {"form": form, "nombre": nombre})
+
+7. Configuramos la URL (las rutas) en  saludo/urls.py
+
+from django.contrib import admin
+from django.urls import path
+from mi_app.views import formulario_vista
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", formulario_vista, name="formulario"),
+]
+
+8. Creamos la plantilla HTML en saludo_app/templates/formulario.html:
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Django</title>
+</head>
+<body>
+    <h1>Formulario en Django</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enviar</button>
+    </form>
+
+    {% if nombre %}
+        <h2>Hola, {{ nombre }}!</h2>
+    {% endif %}
+</body>
+</html>
+
+9, Ejecutamos el servidor:
+
+python3 manage.py runserver
