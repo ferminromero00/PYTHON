@@ -1,5 +1,5 @@
 ssh fermin1@54.159.93.50
 python3 manage.py runserver
 
-django-admin startproject saludo
-python manage.py startapp saludo_app
+django-admin startproject agendaBaseDatos
+python3 manage.py startapp agenda_app
