@@ -15,11 +15,11 @@ def index(request):
             # Guardar la cita en formato de diccionario (serializable)
             cita = {
                 "descripcion": descripcion,
-                "fecha": fecha.strftime("%d-%m-%Y") if fecha else None  # Convertir fecha a string
+                "fecha": fecha.strftime("%d-%m-%Y") if fecha else None 
             }
 
             request.session["agenda"].append(cita)
-            request.session.modified = True  # Indicar que la sesión ha cambiado
+            request.session.modified = True
 
     else:
         form = Formulario()
