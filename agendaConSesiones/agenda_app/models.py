@@ -5,4 +5,4 @@ class Cita(models.Model):
     fecha = models.DateTimeField()
 
     def __str__(self):
-        return self.description
+        return f"{self.description} - {self.fecha.strftime('%d-%m-%Y')}"
