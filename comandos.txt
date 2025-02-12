@@ -3,3 +3,4 @@ python3 manage.py runserver
 
 django-admin startproject agendaBaseDatos
 python3 manage.py startapp agenda_app
+python3 manage.py migrate
