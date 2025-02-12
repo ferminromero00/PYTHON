@@ -8,7 +8,8 @@
   <body>
     <form action="" method="post">
       {% csrf_token %} {{form.as_p}} {% for cita in agenda %}
-      <li>{{cita}}</li>
+      <li>{{cita.descripcion}}</li>
+      <li>{{cita.fecha}}</li>
       {%empty%}
       <li>La agenda esta vacia</li>
       {% endfor %}
