@@ -12,7 +12,11 @@ def index(request):
             descripcion = form.cleaned_data["descripcion"]
             fecha = form.cleaned_data["fecha"]
 
-            # Guardar la cita en formato de diccionario (serializable)
+            # Crear una instancia de Cita y guardarla en la base de datos
+            nueva_cita = Cita(description=descripcion, fecha=fecha)
+            nueva_cita.save()
+
+            # Guardar la cita en formato de diccionario (serializable) en la sesión
             cita = {
                 "descripcion": descripcion,
                 "fecha": fecha.strftime("%d-%m-%Y") if fecha else None 
