@@ -14,14 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from agenda_app.views import cita, citas, editar_cita
+from .views import index, cita, citas, editar_cita
 
 urlpatterns = [
-
-path('cita/', cita, name='cita'),
-
-path('citas/', citas, name='citas'),
-
-path('cita_editar/<int:pk>/', editar_cita, name='editar_cita'),
-
+    path('', index, name='index'),
+    path('cita/', cita, name='cita'),
+    path('citas/', citas, name='citas'),
+    path('cita_editar/<int:pk>/', editar_cita, name='editar_cita'),
 ]
+
