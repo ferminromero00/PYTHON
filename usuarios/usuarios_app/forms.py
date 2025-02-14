@@ -4,6 +4,6 @@ from usuarios_app.models import Usuario
 
 class RegistroForm(UserCreationForm):
     class Meta():
-        model: Usuario
+        model = Usuario
         fields = ['username', 'password', 'nombre_apellidos']
         
