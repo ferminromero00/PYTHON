@@ -9,8 +9,11 @@ def index(request):
         if form.is_valid():
             cita = form.save()
         else:
-            form = CitaForm
+            form = CitaForm(request.POST)
         return render(request, "index.html", {'form': form})
+    else:
+        form = CitaForm()
+    return render(request, "index.html", {'form': form})
 
 def cita(request):
     if request.method == "POST":
@@ -20,4 +23,4 @@ def cita(request):
             return redirect('citas')
     else:
         form = CitaForm()
-    return render(request, 'cita.html', {'form': form})        
+    return render(request, 'cita.html', {'form': form})
