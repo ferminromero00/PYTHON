@@ -1,43 +1,58 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Cita
 from .forms import CitaForm
+from .models import Cita
+
+# Create your views here.
 
 def index(request):
-    form = CitaForm()
-    return render(request, 'index.html', {'form': form})
-
-def citas(request):
-    citas = Cita.objects.all()
-    return render(request, 'vercitas.html', {'citas': citas})
-
-def cita(request):
-    if request.method == "POST":
+    
+    # Si hemos recibido el formulario
+    if request.method == 'POST':
+        # Recogemos los datos del formulario
         form = CitaForm(request.POST)
+        # Si el formulario supera la validación
         if form.is_valid():
-            cita = form.save()
-            return redirect('citas')
-    else:
-        form = CitaForm()
-    return render(request, 'cita.html', {'form': form})
+            # grabamos los datos del formulario en la base de datos
+            form.save()
 
-def editar_cita(request, pk):
+    else: 
+        form = CitaForm()
+
+    # Leemos todas las citas de la base de datos
+    citas = Cita.objects.all
+    return render(request, "index.html", { 'form':form, 'citas': citas })
+
+def cambiarcita(request, pk):
+    # Leemos la cita de la base de datos
     cita = get_object_or_404(Cita, pk=pk)
     
+    # Si cambiamos el objeto
     if request.method == "POST":
+        # Recogemos el objeto que queremos actualizar
         form = CitaForm(request.POST, instance=cita)
         if form.is_valid():
-            form.save()
-            return redirect('citas')  # Redirigir tras la edición
+            # Actualizamos el objeto
+            if "guardar" in request:
+                # Crea o actualiza
+                form.save()
+            else:
+                # Borra  la cita
+                cita.delete()
+            # Y volvemos a index donde se nos mostrará el formulario y todas las citas
+            return redirect('index')  
     else:
+        # La prime avez muestra los datos de la cita en el formulario
         form = CitaForm(instance=cita)
 
-    return render(request, 'citaeditar.html', {'form': form})
+    # Y en el mismo index aparece la cita para ser actualizada
+    # return render(request, 'index.html', {'form': form})
+    return render(request, 'editarcita.html', {'form': form})
 
-def borrar_cita(request, id):
-    cita = get_object_or_404(Cita, id=id)
-    
-    if request.method == 'POST':  # Solo borra si se confirma
+def eliminarcita(request, pk):
+
+    cita = get_object_or_404(Cita, pk=pk)
+    if request.method == 'POST':
         cita.delete()
-        return redirect('citas')
-
-    return render(request, 'citas/cita_confirm_delete.html', {'cita': cita})
+        return redirect('index')
+    else:
+        return render(request, 'confirmar.html', {'cita': cita})

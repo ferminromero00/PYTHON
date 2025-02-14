@@ -1,4 +1,4 @@
-"""agendaBaseDatos URL Configuration
+"""agendaconbasedatos URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -13,13 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.contrib import admin
 from django.urls import path
-from agenda_app.views import index, cita, citas, editar_cita
+from agenda_app.views import index, cambiarcita, eliminarcita
 
 urlpatterns = [
+    path('cambiarcita/<int:pk>/', cambiarcita, name='cambiarcita'),
+    path('eliminarcita/<int:pk>/', eliminarcita, name='eliminarcita'),
     path('', index, name='index'),
-    path('cita/', cita, name='cita'),
-    path('citas/', citas, name='citas'),
-    path('cita_editar/<int:pk>/', editar_cita, name='editar_cita'),
+    path('admin/', admin.site.urls),
 ]
-
