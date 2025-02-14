@@ -2,6 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Cita
 from .forms import CitaForm
 
+def index(request):
+    form = CitaForm()
+    return render(request, 'index.html', {'form': form})
+
 def citas(request):
     citas = Cita.objects.all()
     return render(request, 'vercitas.html', {'citas': citas})
