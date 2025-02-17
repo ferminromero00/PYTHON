@@ -20,5 +20,5 @@ def inicio(request):
     return render(request, 'index.html')
 
 def salir(request):
-    logout(request, request.user)
+    logout(request)
     return render(request, 'index.html')
