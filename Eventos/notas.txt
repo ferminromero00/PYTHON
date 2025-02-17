@@ -1,0 +1,8 @@
+1. Crear modelo
+2. Crear forms
+3. Crear vista
+4. Crear plantilla
+5. Crear rutas
+6. Migrar
+
+Modelo Evento
