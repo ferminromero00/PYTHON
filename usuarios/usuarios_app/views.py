@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from usuarios_app.forms import RegistroForm
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def registro(request):
@@ -14,7 +15,7 @@ def registro(request):
         form = RegistroForm()
     return render(request, 'registro.html', {'form': form})
 
-
+@login_required
 def inicio(request):
     return render(request, 'index.html')
 
