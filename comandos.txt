@@ -1,9 +1,9 @@
 ssh fermin1@
 python3 manage.py runserver
 
-django-admin startproject usuarios
-python3 manage.py startapp usuarios_app
-python3 manage.py migrate
+django-admin startproject Eventos
+sudo chmod -R 777 *
+python3 manage.py startapp Eventos_app
 
 Migrar
 python3 manage.py makemigrations
