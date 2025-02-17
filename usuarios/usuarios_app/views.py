@@ -12,3 +12,7 @@ def registro(request):
     else:
         form = RegistroForm()
     return render(request, 'registro.html', {'form': form})
+
+
+def inicio(request):
+    return render(request, 'index.html')
