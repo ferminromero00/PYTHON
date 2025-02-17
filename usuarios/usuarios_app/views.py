@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from usuarios_app.forms import RegistroForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -21,4 +21,4 @@ def inicio(request):
 
 def salir(request):
     logout(request)
-    return render(request, 'index.html')
+    return redirect('login')
