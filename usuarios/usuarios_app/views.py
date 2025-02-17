@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from usuarios_app.forms import RegistroForm
+from django.contrib.auth import logout
 
 # Create your views here.
 def registro(request):
@@ -15,4 +16,8 @@ def registro(request):
 
 
 def inicio(request):
+    return render(request, 'index.html')
+
+def salir(request):
+    logout(request, request.user)
     return render(request, 'index.html')
