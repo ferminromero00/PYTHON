@@ -89,7 +89,7 @@ DATABASES = {
 
 AUTH_USER_MODEL = "usuarios_app.Usuario"
 LOGIN_REDIRECT_URL = '/inicio/'
-
+LOGIN_URL = '/login/'
 
 
 # Internationalization
