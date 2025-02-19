@@ -1,4 +1,9 @@
 1. Crear modelo
+
+1.1 Migrar
+1.2 Crear Superusuario
+1.3 Registrar modelos en admin.py
+
 2. Crear forms
 3. Crear vista
 4. Crear plantilla
