@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from eventos_app.views import index
+from eventos_app.views import index, crear_evento
 from usuarios_app.views import salir
 
 urlpatterns = [
+    path("nuevoevento/", crear_evento , name="nuevoevento"),
     path("salir/", salir , name="salir"),
     path('index/', index, name="index"),
     path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
