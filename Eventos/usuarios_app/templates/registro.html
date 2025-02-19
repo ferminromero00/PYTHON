@@ -1,0 +1,11 @@
+<!-- filepath: /c:/Users/fermin/Desktop/APLICACIONES/XAMPP/htdocs/dwes/PYTHON/usuarios/usuarios_app/templates/registro.html -->
+{% extends "base.html" %}
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar</button>
+</form>
+
+{% endblock %}
