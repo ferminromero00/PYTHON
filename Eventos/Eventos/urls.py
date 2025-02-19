@@ -19,7 +19,7 @@ from django.contrib.auth import views as auth_views
 from eventos_app.views import index
 
 urlpatterns = [
-    path('index', index, name="index"),
+    path('index/', index, name="index"),
     path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('admin/', admin.site.urls),
 ]
