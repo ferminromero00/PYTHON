@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %} 
+
+<div class="container columnas mt-4">
+    <div class="column">    
+        <table class="table table-striped table-hover mt-3">
+            <thead>
+                <tr>
+                    <th colspan="2">Usuarios</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.first_name }}</td>
+                        <td><a href="{% url 'invitar' usuario.id evento.id %}">Invitar</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
+    <div class="column">    
+        <table class="table table-striped table-hover mt-3">
+            <thead>
+                <tr>
+                    <th colspan="2">Invitaciones para {{ evento.titulo }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Utilizamos el nombre de la propiedad del model + all -->
+                {% for invitado in evento.invitados.all %}
+                    <tr>
+                        <td>{{ invitado.first_name }} {{ invitado.last_name }} </td>
+                        <!-- Pasamos los dos id's -->
+                        <td><a href="{% url 'borrar_invitacion' invitado.id evento.id %}">Borrar invitación</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
