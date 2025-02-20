@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Invitaciones</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    {% include 'eventos_app/base.html' %}
+    
+    <div class="container">
+        <h1>Eventos a los que he sido invitado</h1>
+        
+        {% if mis_invitaciones %}
+            <ul>
+                {% for invitacion in mis_invitaciones %}
+                    <li>
+                        <strong>{{ invitacion.evento.titulo }}</strong><br>
+                        Descripción: {{ invitacion.evento.descripcion }}<br>
+                        Fecha: {{ invitacion.evento.fecha }}<br>
+                        <a href="{% url 'eventos_app:ver_evento' invitacion.evento.id %}">Ver Evento</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No tienes invitaciones a eventos.</p>
+        {% endif %}
+        
+        <a href="{% url 'eventos_app:index' %}">Volver a la lista de eventos</a>
+    </div>
+</body>
+</html>
