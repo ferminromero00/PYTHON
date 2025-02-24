@@ -46,10 +46,3 @@ def home(request):
 
     publicaciones = Publicacion.objects.filter(autor=request.user).order_by('-fecha')
     return render(request, 'home.html', {'form': form, 'publicaciones': publicaciones})
-
-def borrar_publicacion(request, id):
-    publicacion = get_object_or_404(Publicacion, id=id)
-    if request.method == 'POST':
-        publicacion.delete()
-        return redirect('home')
-    return render(request, 'confirmar_borrado.html', {'publicacion': publicacion})
