@@ -13,3 +13,10 @@ class ComentarioForm(forms.ModelForm):
     class Meta:
         model = Comentario
         fields = ['texto']
+
+    def save(self, commit=True):
+        comentario = super().save(commit=False)
+        if commit:
+            comentario.save()
+        return comentario
+

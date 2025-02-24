@@ -28,9 +28,11 @@
 
   <!-- Formulario para comentar -->
   <form method="POST" action="{% url 'comentar_publicacion' publicacion.id %}">
-    {% csrf_token %} {{ comentario_form.as_p }}
+    {% csrf_token %}
+    {{ comentario_form.as_p }}
     <button type="submit">Comentar</button>
-  </form>
+</form>
+
 
   <!-- Botón para borrar -->
   <form method="POST" action="{% url 'borrar_publicacion' publicacion.id %}">
