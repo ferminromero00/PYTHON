@@ -2,12 +2,23 @@ from django import forms
 from .models import Publicacion, Comentario
 
 class PublicacionForm(forms.ModelForm):
+    imagen = forms.ImageField(required=False, widget=forms.FileInput(attrs={
+        'accept': 'image/*',
+        'class': 'form-control'
+    }))
+    
     class Meta:
         model = Publicacion
         fields = ['contenido', 'imagen']
         widgets = {
             'contenido': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Escribe algo...'})
         }
+
+    def save(self, commit=True):
+        publicacion = super().save(commit=False)
+        if commit:
+            publicacion.save()
+        return publicacion
 
 class ComentarioForm(forms.ModelForm):
     class Meta:
