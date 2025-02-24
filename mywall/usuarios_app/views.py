@@ -11,7 +11,7 @@ def registro(request):
             return redirect('home')  # Redirige a la página principal
     else:
         form = RegistroForm()
-    return render(request, 'usuarios_app/registro.html', {'form': form})
+    return render(request, 'registro.html', {'form': form})
 
 def iniciar_sesion(request):
     if request.method == 'POST':
@@ -22,7 +22,7 @@ def iniciar_sesion(request):
             return redirect('home')
     else:
         form = LoginForm()
-    return render(request, 'usuarios_app/login.html', {'form': form})
+    return render(request, 'login.html', {'form': form})
 
 def cerrar_sesion(request):
     logout(request)
