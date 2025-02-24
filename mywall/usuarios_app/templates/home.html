@@ -1,66 +1,144 @@
-<h1>Bienvenido, {{ user.username }}</h1>
+<style>
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
 
-<!-- Sección de otros usuarios -->
-<div
-  style="
-    border: 1px solid #ccc;
-    padding: 10px;
+  .welcome {
+    color: #2c3e50;
+    margin-bottom: 30px;
+  }
+
+  .users-box {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .users-box a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .users-box a:hover {
+    color: #2980b9;
+  }
+
+  .post-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 20px 0;
+  }
+
+  .post {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 20px 0;
+  }
+
+  .post-header {
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+
+  .comments-section {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
     margin: 10px 0;
-    max-width: 300px;
-  "
->
-  <h3>Otros usuarios</h3>
-  {% for usuario in usuarios %} {% if usuario != user %}
-  <p>
-    <a href="{% url 'muro_usuario' usuario.username %}"
-      >{{ usuario.username }}</a
-    >
-  </p>
-  {% endif %} {% empty %}
-  <p>No hay otros usuarios registrados.</p>
-  {% endfor %}
-</div>
+  }
 
-<!-- Formulario para escribir una publicación -->
-<form method="POST">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Publicar</button>
-</form>
+  .btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
 
-<a href="{% url 'logout' %}">Cerrar sesión</a>
+  .btn:hover {
+    background-color: #2980b9;
+  }
 
-<hr />
+  .btn-delete {
+    background-color: #e74c3c;
+  }
 
-<h2>Tus Publicaciones</h2>
-{% for publicacion in publicaciones %}
-<div>
-  <p>
-    <strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}
-  </p>
-  <p>{{ publicacion.contenido }}</p>
+  .btn-delete:hover {
+    background-color: #c0392b;
+  }
 
-  <h4>Comentarios:</h4>
-  {% for comentario in publicacion.publicacion.all %}
-  <p>
-    <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}
-  </p>
+  .logout-link {
+    color: #e74c3c;
+    text-decoration: none;
+    font-weight: bold;
+  }
+</style>
+
+<div class="container">
+  <h1 class="welcome">Bienvenido, {{ user.username }}</h1>
+
+  <div class="users-box">
+    <h3>Otros usuarios</h3>
+    {% for usuario in usuarios %} {% if usuario != user %}
+    <p>
+      <a href="{% url 'muro_usuario' usuario.username %}">{{ usuario.username }}</a>
+    </p>
+    {% endif %} {% empty %}
+    <p>No hay otros usuarios registrados.</p>
+    {% endfor %}
+  </div>
+
+  <form method="POST" class="post-form">
+    {% csrf_token %} 
+    {{ form.as_p }}
+    <button type="submit" class="btn">Publicar</button>
+  </form>
+
+  <a href="{% url 'logout' %}" class="logout-link">Cerrar sesión</a>
+
+  <h2>Tus Publicaciones</h2>
+  {% for publicacion in publicaciones %}
+  <div class="post">
+    <p class="post-header">
+      <strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}
+    </p>
+    <p>{{ publicacion.contenido }}</p>
+
+    <div class="comments-section">
+      <h4>Comentarios:</h4>
+      {% for comentario in publicacion.publicacion.all %}
+      <p>
+        <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}
+      </p>
+      {% empty %}
+      <p>No hay comentarios aún.</p>
+      {% endfor %}
+
+      <form method="POST" action="{% url 'comentar_publicacion' publicacion.id %}">
+        {% csrf_token %} 
+        {{ comentario_form.as_p }}
+        <button type="submit" class="btn">Comentar</button>
+      </form>
+    </div>
+
+    <form method="POST" action="{% url 'borrar_publicacion' publicacion.id %}" style="margin-top: 10px;">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-delete">Borrar</button>
+    </form>
+  </div>
   {% empty %}
-  <p>No hay comentarios aún.</p>
+  <p>No tienes publicaciones aún.</p>
   {% endfor %}
-
-  <!-- Formulario para comentar -->
-  <form method="POST" action="{% url 'comentar_publicacion' publicacion.id %}">
-    {% csrf_token %} {{ comentario_form.as_p }}
-    <button type="submit">Comentar</button>
-  </form>
-
-  <!-- Botón para borrar -->
-  <form method="POST" action="{% url 'borrar_publicacion' publicacion.id %}">
-    {% csrf_token %}
-    <button type="submit">Borrar</button>
-  </form>
 </div>
-<hr />
-{% empty %}
-<p>No tienes publicaciones aún.</p>
-{% endfor %}

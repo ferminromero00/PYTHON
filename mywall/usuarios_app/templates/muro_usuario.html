@@ -1,33 +1,100 @@
-<h1>Muro de {{ usuario.username }}</h1>
+<style>
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
 
-<a href="{% url 'home' %}">Volver a mi muro</a>
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
 
-<!-- Mostrar publicaciones -->
-<h2>Publicaciones</h2>
-{% for publicacion in publicaciones %}
-<div>
-  <p>
-    <strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}
-  </p>
-  <p>{{ publicacion.contenido }}</p>
+  .back-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
 
-  <h4>Comentarios:</h4>
-  {% for comentario in publicacion.publicacion.all %}
-  <p>
-    <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}
-  </p>
+  .back-link:hover {
+    color: #2980b9;
+  }
+
+  .post {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+  }
+
+  .post-header {
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+
+  .comments-section {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 10px 0;
+  }
+
+  .btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .btn:hover {
+    background-color: #2980b9;
+  }
+</style>
+
+<div class="container">
+  <div class="header">
+    <h1>Muro de {{ usuario.username }}</h1>
+    <a href="{% url 'home' %}" class="back-link">Volver a mi muro</a>
+  </div>
+
+  <h2>Publicaciones</h2>
+  {% for publicacion in publicaciones %}
+  <div class="post">
+    <p class="post-header">
+      <strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha
+      }}
+    </p>
+    <p>{{ publicacion.contenido }}</p>
+
+    <div class="comments-section">
+      <h4>Comentarios:</h4>
+      {% for comentario in publicacion.publicacion.all %}
+      <p>
+        <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto
+        }}
+      </p>
+      {% empty %}
+      <p>No hay comentarios aún.</p>
+      {% endfor %}
+
+      <form
+        method="POST"
+        action="{% url 'comentar_publicacion' publicacion.id %}"
+      >
+        {% csrf_token %} {{ comentario_form.as_p }}
+        <button type="submit" class="btn">Comentar</button>
+      </form>
+    </div>
+  </div>
   {% empty %}
-  <p>No hay comentarios aún.</p>
+  <p>No hay publicaciones.</p>
   {% endfor %}
-
-  <!-- Formulario para comentar -->
-  <form method="POST" action="{% url 'comentar_publicacion' publicacion.id %}">
-    {% csrf_token %} {{ comentario_form.as_p }}
-    <button type="submit">Comentar</button>
-  </form>
 </div>
-<hr />
-{% empty %}
-<p>No hay publicaciones.</p>
-{% endfor %}
-
