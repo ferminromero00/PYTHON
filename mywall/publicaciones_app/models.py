@@ -13,6 +13,7 @@ class Publicacion(models.Model):
     # necesario cuando esa tabla tiene más atributos,
     # se utiliza la clausula through
     comentarios = models.ManyToManyField(Usuario, through="Comentario")
+    imagen = models.ImageField(upload_to='publicaciones/', null=True, blank=True)
     # Más las propiedades que consideres
     
 

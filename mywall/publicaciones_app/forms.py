@@ -4,7 +4,7 @@ from .models import Publicacion, Comentario
 class PublicacionForm(forms.ModelForm):
     class Meta:
         model = Publicacion
-        fields = ['contenido']
+        fields = ['contenido', 'imagen']
         widgets = {
             'contenido': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Escribe algo...'})
         }

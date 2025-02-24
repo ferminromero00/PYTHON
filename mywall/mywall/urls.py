@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from usuarios_app.views import registro, iniciar_sesion, cerrar_sesion
 from publicaciones_app.views import borrar_publicacion, muro_usuario, comentar_publicacion, home
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +29,7 @@ urlpatterns = [
     path('borrar/<int:id>/', borrar_publicacion, name='borrar_publicacion'),
     path('muro/<str:username>/', muro_usuario, name='muro_usuario'),
     path('comentar/<int:publicacion_id>/', comentar_publicacion, name='comentar_publicacion'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 

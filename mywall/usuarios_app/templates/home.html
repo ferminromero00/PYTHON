@@ -6,6 +6,16 @@
     font-family: Arial, sans-serif;
   }
 
+  .post-image {
+    margin: 15px 0;
+}
+
+  .post-image img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
   .welcome {
     color: #2c3e50;
     margin-bottom: 30px;
@@ -138,6 +148,12 @@
       <strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}
     </p>
     <p>{{ publicacion.contenido }}</p>
+
+    {% if publicacion.imagen %}
+    <div class="post-image">
+        <img src="{{ publicacion.imagen.url }}" alt="Imagen de la publicación">
+    </div>
+    {% endif %}
 
     <div class="comments-section">
       <h4>Comentarios:</h4>

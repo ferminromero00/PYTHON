@@ -6,9 +6,8 @@ from usuarios_app.models import Usuario
 
 @login_required
 def home(request):
-    """Muestra el muro del usuario autenticado con sus publicaciones."""
     if request.method == "POST":
-        form = PublicacionForm(request.POST)
+        form = PublicacionForm(request.POST, request.FILES)
         if form.is_valid():
             publicacion = form.save(commit=False)
             publicacion.autor = request.user
