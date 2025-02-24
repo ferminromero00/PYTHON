@@ -1,5 +1,7 @@
 <h1>Muro de {{ usuario.username }}</h1>
 
+<a href="{% url 'home' %}">Volver a mi muro</a>
+
 <!-- Mostrar publicaciones -->
 <h2>Publicaciones</h2>
 {% for publicacion in publicaciones %}
@@ -29,4 +31,3 @@
 <p>No hay publicaciones.</p>
 {% endfor %}
 
-<a href="{% url 'home' %}">Volver a mi muro</a>
