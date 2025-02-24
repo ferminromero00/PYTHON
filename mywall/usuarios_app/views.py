@@ -32,17 +32,3 @@ def cerrar_sesion(request):
     logout(request)
     return redirect('login')
 
-@login_required
-def home(request):
-    if request.method == "POST":
-        form = PublicacionForm(request.POST)
-        if form.is_valid():
-            publicacion = form.save(commit=False)
-            publicacion.autor = request.user
-            publicacion.save()
-            return redirect('home')  
-    else:
-        form = PublicacionForm()
-
-    publicaciones = Publicacion.objects.filter(autor=request.user).order_by('-fecha')
-    return render(request, 'home.html', {'form': form, 'publicaciones': publicaciones})

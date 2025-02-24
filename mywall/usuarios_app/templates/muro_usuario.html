@@ -1,16 +1,7 @@
-<h1>Bienvenido, {{ user.username }}</h1>
-
-<!-- Formulario para escribir una publicación -->
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Publicar</button>
-</form>
-
-<hr />
+<h1>Muro de {{ usuario.username }}</h1>
 
 <!-- Mostrar publicaciones -->
-<h2>Tus Publicaciones</h2>
+<h2>Publicaciones</h2>
 {% for publicacion in publicaciones %}
 <div>
     <p><strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}</p>
@@ -30,16 +21,10 @@
         {{ comentario_form.as_p }}
         <button type="submit">Comentar</button>
     </form>
-
-    <!-- Botón para borrar -->
-    <form method="POST" action="{% url 'borrar_publicacion' publicacion.id %}">
-        {% csrf_token %}
-        <button type="submit">Borrar</button>
-    </form>
 </div>
 <hr />
 {% empty %}
-<p>No tienes publicaciones aún.</p>
+<p>No hay publicaciones.</p>
 {% endfor %}
 
-<a href="{% url 'logout' %}">Cerrar sesión</a>
+<a href="{% url 'home' %}">Volver a mi muro</a>
