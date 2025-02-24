@@ -19,11 +19,14 @@ def home(request):
 
     publicaciones = Publicacion.objects.filter(autor=request.user).order_by('-fecha')
     comentario_form = ComentarioForm()
+    usuarios = Usuario.objects.all()
 
     return render(request, 'home.html', {
         'form': form,
         'publicaciones': publicaciones,
         'comentario_form': comentario_form,
+        'usuarios': usuarios, 
+
     })
 
 
