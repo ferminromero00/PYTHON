@@ -14,6 +14,7 @@ class Publicacion(models.Model):
     # se utiliza la clausula through
     comentarios = models.ManyToManyField(Usuario, through="Comentario")
     imagen = models.ImageField(upload_to='publicaciones/', null=True, blank=True)
+    video = models.FileField(upload_to='publicaciones/videos/', null=True, blank=True)
     # Más las propiedades que consideres
     
 

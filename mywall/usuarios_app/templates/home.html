@@ -160,6 +160,15 @@
     font-size: 0.85em;
   }
 
+  .post-video {
+    margin: 15px 0;
+  }
+
+  .post-video video {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
   .logout-btn:hover {
     background-color: #c0392b;
   }
@@ -205,6 +214,15 @@
           <img src="{{ publicacion.imagen.url }}" alt="Imagen de la publicación">
         </div>
         {% endif %}
+
+        {% if publicacion.video %}
+        <div class="post-video">
+          <video controls>
+            <source src="{{ publicacion.video.url }}" type="video/mp4">
+            Tu navegador no soporta el elemento video.
+          </video>
+        </div>
+    {% endif %}
 
         <div class="comments-section">
           <h4>Comentarios:</h4>

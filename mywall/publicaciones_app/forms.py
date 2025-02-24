@@ -7,9 +7,14 @@ class PublicacionForm(forms.ModelForm):
         'class': 'form-control'
     }))
     
+    video = forms.FileField(required=False, widget=forms.FileInput(attrs={
+        'accept': 'video/*',
+        'class': 'form-control'
+    }))
+    
     class Meta:
         model = Publicacion
-        fields = ['contenido', 'imagen']
+        fields = ['contenido', 'imagen', 'video']
         widgets = {
             'contenido': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Escribe algo...'})
         }
