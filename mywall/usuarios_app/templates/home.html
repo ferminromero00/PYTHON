@@ -19,13 +19,13 @@
   <p>{{ publicacion.contenido }}</p>
 
   <h4>Comentarios:</h4>
-  {% for comentario in publicacion.comentarios.all %}
-  <p>
-    <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}
-  </p>
-  {% empty %}
-  <p>No hay comentarios aún.</p>
-  {% endfor %}
+{% for comentario in publicacion.publicacion.all %}
+<p>
+  <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}
+</p>
+{% empty %}
+<p>No hay comentarios aún.</p>
+{% endfor %}
 
   <!-- Formulario para comentar -->
   <form method="POST" action="{% url 'comentar_publicacion' publicacion.id %}">
