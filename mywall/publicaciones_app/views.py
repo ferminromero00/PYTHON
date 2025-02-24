@@ -50,11 +50,12 @@ def comentar_publicacion(request, publicacion_id):
         form = ComentarioForm(request.POST)
         if form.is_valid():
             comentario = form.save(commit=False)
-            comentario.publicacion = publicacion
-            comentario.contacto = request.user
+            comentario.publicacion = publicacion  # Asociar comentario con la publicación
+            comentario.contacto = request.user  # Asociar comentario con el usuario
             comentario.save()
     
     return redirect(request.META.get('HTTP_REFERER', 'home'))
+
 
 
 @login_required

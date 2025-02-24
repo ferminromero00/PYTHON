@@ -13,6 +13,3 @@ class ComentarioForm(forms.ModelForm):
     class Meta:
         model = Comentario
         fields = ['texto']
-        widgets = {
-            'texto': forms.TextInput(attrs={'placeholder': 'Escribe un comentario...'})
-        }
