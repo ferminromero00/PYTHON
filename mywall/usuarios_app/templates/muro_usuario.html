@@ -4,23 +4,25 @@
 <h2>Publicaciones</h2>
 {% for publicacion in publicaciones %}
 <div>
-    <p><strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}</p>
-    <p>{{ publicacion.contenido }}</p>
-    
-    <!-- Mostrar comentarios -->
-    <h4>Comentarios:</h4>
-    {% for comentario in publicacion.comentario_set.all %}
-        <p><strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}</p>
-    {% empty %}
-        <p>No hay comentarios aún.</p>
-    {% endfor %}
+  <p>
+    <strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}
+  </p>
+  <p>{{ publicacion.contenido }}</p>
 
-    <!-- Formulario para comentar -->
-    <form method="POST" action="{% url 'comentar_publicacion' publicacion.id %}">
-        {% csrf_token %}
-        {{ comentario_form.as_p }}
-        <button type="submit">Comentar</button>
-    </form>
+  <h4>Comentarios:</h4>
+  {% for comentario in publicacion.publicacion.all %}
+  <p>
+    <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}
+  </p>
+  {% empty %}
+  <p>No hay comentarios aún.</p>
+  {% endfor %}
+
+  <!-- Formulario para comentar -->
+  <form method="POST" action="{% url 'comentar_publicacion' publicacion.id %}">
+    {% csrf_token %} {{ comentario_form.as_p }}
+    <button type="submit">Comentar</button>
+  </form>
 </div>
 <hr />
 {% empty %}
