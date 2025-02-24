@@ -1,8 +1,25 @@
-{% if user.is_authenticated %}
 <h1>Bienvenido, {{ user.username }}</h1>
+
+<!-- Formulario para escribir una publicación -->
+<form method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Publicar</button>
+</form>
+
+<hr />
+
+<!-- Mostrar publicaciones -->
+<h2>Tus Publicaciones</h2>
+{% for publicacion in publicaciones %}
+<div>
+  <p>
+    <strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}
+  </p>
+  <p>{{ publicacion.contenido }}</p>
+</div>
+<hr />
+{% empty %}
+<p>No tienes publicaciones aún.</p>
+{% endfor %}
+
 <a href="{% url 'logout' %}">Cerrar sesión</a>
-{% else %}
-<h1>Bienvenido al Muro</h1>
-<a href="{% url 'login' %}">Iniciar sesión</a> |
-<a href="{% url 'registro' %}">Registrarse</a>
-{% endif %}
