@@ -6,4 +6,3 @@ def borrar_publicacion(request, id):
     if request.method == 'POST':
         publicacion.delete()
         return redirect('home')
-    return render(request, 'confirmar_borrado.html', {'publicacion': publicacion})
