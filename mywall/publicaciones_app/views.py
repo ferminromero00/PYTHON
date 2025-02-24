@@ -6,7 +6,7 @@ from usuarios_app.models import Usuario
 
 @login_required
 def home(request):
-    """Muestra el muro del usuario autenticado."""
+    """Muestra el muro del usuario autenticado con sus publicaciones."""
     if request.method == "POST":
         form = PublicacionForm(request.POST)
         if form.is_valid():
@@ -20,7 +20,12 @@ def home(request):
     publicaciones = Publicacion.objects.filter(autor=request.user).order_by('-fecha')
     comentario_form = ComentarioForm()
 
-    return render(request, 'home.html', {'form': form, 'publicaciones': publicaciones, 'comentario_form': comentario_form})
+    return render(request, 'home.html', {
+        'form': form,
+        'publicaciones': publicaciones,
+        'comentario_form': comentario_form
+    })
+
 
 @login_required
 def muro_usuario(request, username):
@@ -34,6 +39,7 @@ def muro_usuario(request, username):
         'publicaciones': publicaciones,
         'comentario_form': comentario_form
     })
+
 
 @login_required
 def comentar_publicacion(request, publicacion_id):
@@ -49,6 +55,7 @@ def comentar_publicacion(request, publicacion_id):
             comentario.save()
     
     return redirect(request.META.get('HTTP_REFERER', 'home'))
+
 
 @login_required
 def borrar_publicacion(request, id):
