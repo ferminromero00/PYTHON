@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from .forms import RegistroForm, LoginForm
+from django.contrib.auth.decorators import login_required
+
 
 def registro(request):
     if request.method == 'POST':
@@ -8,7 +10,7 @@ def registro(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')  # Redirige a la página principal
+            return redirect('home')  
     else:
         form = RegistroForm()
     return render(request, 'registro.html', {'form': form})
@@ -27,3 +29,7 @@ def iniciar_sesion(request):
 def cerrar_sesion(request):
     logout(request)
     return redirect('login')
+
+@login_required
+def home(request):
+    return render(request, 'home.html')
