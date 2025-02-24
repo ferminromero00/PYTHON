@@ -4,7 +4,6 @@ from .forms import RegistroForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from publicaciones_app.models import Publicacion
 from publicaciones_app.forms import PublicacionForm
-from .models import Publicacion
 
 
 def registro(request):
