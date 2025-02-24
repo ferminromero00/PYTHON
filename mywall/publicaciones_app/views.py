@@ -20,15 +20,12 @@ def home(request):
     publicaciones = Publicacion.objects.filter(autor=request.user).order_by('-fecha')
     comentario_form = ComentarioForm()
 
-    # Pasamos los comentarios directamente
-    comentarios = Comentario.objects.all()
-
     return render(request, 'home.html', {
         'form': form,
         'publicaciones': publicaciones,
         'comentario_form': comentario_form,
-        'comentarios': comentarios  # Pasar comentarios
     })
+
 
 
 @login_required
@@ -57,6 +54,7 @@ def comentar_publicacion(request, publicacion_id):
             comentario.publicacion = publicacion  # Relacionamos el comentario con la publicación
             comentario.contacto = request.user  # Relacionamos el comentario con el usuario
             comentario.save()  # Guardamos el comentario
+
     
     return redirect(request.META.get('HTTP_REFERER', 'home'))
 

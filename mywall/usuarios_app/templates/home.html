@@ -6,22 +6,19 @@
   <button type="submit">Publicar</button>
 </form>
 
+<a href="{% url 'logout' %}">Cerrar sesión</a>
+
 <hr />
 
-<!-- Mostrar publicaciones -->
 <h2>Tus Publicaciones</h2>
 {% for publicacion in publicaciones %}
 <div>
-  <p>
-    <strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}
-  </p>
+  <p><strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}</p>
   <p>{{ publicacion.contenido }}</p>
 
   <h4>Comentarios:</h4>
   {% for comentario in publicacion.comentarios.all %}
-  <p>
-    <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}
-  </p>
+  <p><strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}</p>
   {% empty %}
   <p>No hay comentarios aún.</p>
   {% endfor %}
@@ -31,8 +28,7 @@
     {% csrf_token %}
     {{ comentario_form.as_p }}
     <button type="submit">Comentar</button>
-</form>
-
+  </form>
 
   <!-- Botón para borrar -->
   <form method="POST" action="{% url 'borrar_publicacion' publicacion.id %}">
@@ -45,4 +41,4 @@
 <p>No tienes publicaciones aún.</p>
 {% endfor %}
 
-<a href="{% url 'logout' %}">Cerrar sesión</a>
+
