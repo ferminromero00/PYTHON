@@ -6,97 +6,94 @@
     font-family: Arial, sans-serif;
   }
 
-  .post-image {
-    margin: 15px 0;
+  .main-layout {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 20px;
+    align-items: start;
   }
 
-  .post-image img {
-    max-width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  } 
-
-  .welcome {
-    color: #2c3e50;
-    margin-bottom: 30px;
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   }
 
   .users-box {
     background-color: #f8f9fa;
     border-radius: 8px;
-    padding: 15px;
-    margin: 20px 0;
+    padding: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 0.85em;
+    text-align: center;
+  }
+
+  .users-box h3 {
+    font-size: 0.9em;
+    margin-bottom: 8px;
   }
 
   .users-box a {
     color: #3498db;
     text-decoration: none;
     transition: color 0.3s;
-  }
-
-  .users-box a:hover {
-    color: #2980b9;
+    display: block;
+    padding: 3px 0;
+    font-size: 0.85em;
   }
 
   .post-form {
     background-color: #fff;
-    padding: 20px;
+    padding: 10px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin: 20px 0;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+  }
+
+  .post-form textarea {
+    width: 100%;
+    min-height: 50px;
+    font-size: 0.9em;
   }
 
   .post {
     background-color: #fff;
-    padding: 20px;
+    padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin: 20px 0;
+    margin-bottom: 15px;
   }
 
   .post-header {
     color: #2c3e50;
-    margin-bottom: 10px;
+    font-size: 0.9em;
+    margin-bottom: 5px;
   }
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .logout-btn {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.3s;
-  }
-
-  .logout-btn:hover {
-    background-color: #c0392b;
+  .post-image img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 10px;
   }
 
   .comments-section {
     background-color: #f8f9fa;
-    padding: 15px;
+    padding: 10px;
     border-radius: 6px;
     margin: 10px 0;
+    font-size: 0.85em;
   }
 
   .btn {
     background-color: #3498db;
     color: white;
     border: none;
-    padding: 8px 16px;
+    padding: 6px 12px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-size: 0.85em;
   }
 
   .btn:hover {
@@ -111,10 +108,26 @@
     background-color: #c0392b;
   }
 
-  .logout-link {
-    color: #e74c3c;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
     text-decoration: none;
-    font-weight: bold;
+    font-size: 0.85em;
+  }
+
+  .logout-btn:hover {
+    background-color: #c0392b;
   }
 </style>
 
@@ -124,60 +137,66 @@
     <a href="{% url 'logout' %}" class="logout-btn">Cerrar sesión</a>
   </div>
 
-  <div class="users-box">
-    <h3>Otros usuarios</h3>
-    {% for usuario in usuarios %} {% if usuario != user %}
-    <p>
-      <a href="{% url 'muro_usuario' usuario.username %}">{{ usuario.username }}</a>
-    </p>
-    {% endif %} {% empty %}
-    <p>No hay otros usuarios registrados.</p>
-    {% endfor %}
-  </div>
+  <div class="main-layout">
+    <div class="sidebar">
+      <div class="users-box">
+        <h3>Otros usuarios</h3>
+        {% for usuario in usuarios %} {% if usuario != user %}
+        <p>
+          <a href="{% url 'muro_usuario' usuario.username %}">{{ usuario.username }}</a>
+        </p>
+        {% endif %} {% empty %}
+        <p>No hay otros usuarios registrados.</p>
+        {% endfor %}
+      </div>
 
-  <form method="POST" class="post-form" enctype="multipart/form-data">
-    {% csrf_token %} 
-    {{ form.as_p }}
-    <button type="submit" class="btn">Publicar</button>
-  </form>
-
-  <h2>Tus Publicaciones</h2>
-  {% for publicacion in publicaciones %}
-  <div class="post">
-    <p class="post-header">
-      <strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}
-    </p>
-    <p>{{ publicacion.contenido }}</p>
-
-    {% if publicacion.imagen %}
-    <div class="post-image">
-        <img src="{{ publicacion.imagen.url }}" alt="Imagen de la publicación">
-    </div>
-    {% endif %}
-
-    <div class="comments-section">
-      <h4>Comentarios:</h4>
-      {% for comentario in publicacion.publicacion.all %}
-      <p>
-        <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}
-      </p>
-      {% empty %}
-      <p>No hay comentarios aún.</p>
-      {% endfor %}
-
-      <form method="POST" action="{% url 'comentar_publicacion' publicacion.id %}">
+      <form method="POST" class="post-form" enctype="multipart/form-data">
         {% csrf_token %} 
-        {{ comentario_form.as_p }}
-        <button type="submit" class="btn">Comentar</button>
+        {{ form.as_p }}
+        <button type="submit" class="btn">Publicar</button>
       </form>
     </div>
 
-    <form method="POST" action="{% url 'borrar_publicacion' publicacion.id %}" style="margin-top: 10px;">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-delete">Borrar</button>
-    </form>
+    <div class="content">
+      <h2>Tus Publicaciones</h2>
+      {% for publicacion in publicaciones %}
+      <div class="post">
+        <p class="post-header">
+          <strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}
+        </p>
+        <p>{{ publicacion.contenido }}</p>
+
+        {% if publicacion.imagen %}
+        <div class="post-image">
+          <img src="{{ publicacion.imagen.url }}" alt="Imagen de la publicación">
+        </div>
+        {% endif %}
+
+        <div class="comments-section">
+          <h4>Comentarios:</h4>
+      {% for comentario in publicacion.publicacion.all %}
+          <p>
+            <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}
+          </p>
+          {% empty %}
+          <p>No hay comentarios aún.</p>
+          {% endfor %}
+
+          <form method="POST" action="{% url 'comentar_publicacion' publicacion.id %}">
+            {% csrf_token %} 
+            {{ comentario_form.as_p }}
+            <button type="submit" class="btn">Comentar</button>
+          </form>
+        </div>
+
+        <form method="POST" action="{% url 'borrar_publicacion' publicacion.id %}" style="margin-top: 10px;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-delete">Borrar</button>
+        </form>
+      </div>
+      {% empty %}
+      <p>No tienes publicaciones aún.</p>
+      {% endfor %}
+    </div>
   </div>
-  {% empty %}
-  <p>No tienes publicaciones aún.</p>
-  {% endfor %}
 </div>
