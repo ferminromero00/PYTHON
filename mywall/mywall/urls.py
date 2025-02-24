@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from usuarios_app.views import registro, iniciar_sesion, cerrar_sesion, home
+from publicaciones_app.views import borrar_publicacion
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,6 +24,8 @@ urlpatterns = [
     path('login/', iniciar_sesion, name='login'),
     path('logout/', cerrar_sesion, name='logout'),
     path('/', home, name='home'),
+    path('borrar/<int:id>/', borrar_publicacion, name='borrar_publicacion'),
+
 ]
 
 

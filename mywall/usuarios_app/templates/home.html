@@ -16,6 +16,10 @@
     <strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}
   </p>
   <p>{{ publicacion.contenido }}</p>
+  <form method="POST" action="{% url 'borrar_publicacion' publicacion.id %}">
+    {% csrf_token %}
+    <button type="submit">Borrar</button>
+  </form>
 </div>
 <hr />
 {% empty %}

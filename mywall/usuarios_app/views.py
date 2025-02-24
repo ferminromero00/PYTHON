@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from .forms import RegistroForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from publicaciones_app.models import Publicacion
 from publicaciones_app.forms import PublicacionForm
+from .models import Publicacion
+
 
 def registro(request):
     if request.method == 'POST':
@@ -39,9 +41,16 @@ def home(request):
             publicacion = form.save(commit=False)
             publicacion.autor = request.user
             publicacion.save()
-            return redirect('home')  # Recarga la página después de publicar
+            return redirect('home')  
     else:
         form = PublicacionForm()
 
     publicaciones = Publicacion.objects.filter(autor=request.user).order_by('-fecha')
     return render(request, 'home.html', {'form': form, 'publicaciones': publicaciones})
+
+def borrar_publicacion(request, id):
+    publicacion = get_object_or_404(Publicacion, id=id)
+    if request.method == 'POST':
+        publicacion.delete()
+        return redirect('home')
+    return render(request, 'confirmar_borrado.html', {'publicacion': publicacion})
