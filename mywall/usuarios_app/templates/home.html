@@ -6,6 +6,8 @@
   <button type="submit">Publicar</button>
 </form>
 
+<a href="{% url 'logout' %}">Cerrar sesión</a>
+
 <hr />
 
 <!-- Mostrar publicaciones -->
@@ -26,4 +28,3 @@
 <p>No tienes publicaciones aún.</p>
 {% endfor %}
 
-<a href="{% url 'logout' %}">Cerrar sesión</a>
