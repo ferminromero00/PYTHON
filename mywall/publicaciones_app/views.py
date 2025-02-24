@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Publicacion, Comentario
-from .forms import PublicacionForm, ComentarioForm
+from .forms import PublicacionForm, ComentarioForm, RespuestaForm
 from usuarios_app.models import Usuario
 
 @login_required
@@ -74,3 +74,16 @@ def borrar_publicacion(request, id):
         return redirect('home')
 
     return redirect('home')
+
+@login_required
+def responder_comentario(request, comentario_id):
+    comentario_padre = get_object_or_404(Comentario, id=comentario_id)
+    if request.method == "POST":
+        form = RespuestaForm(request.POST)
+        if form.is_valid():
+            respuesta = form.save(commit=False)
+            respuesta.contacto = request.user
+            respuesta.publicacion = comentario_padre.publicacion
+            respuesta.padre = comentario_padre
+            respuesta.save()
+    return redirect(request.META.get('HTTP_REFERER', 'home'))

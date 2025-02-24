@@ -31,3 +31,14 @@ class ComentarioForm(forms.ModelForm):
             comentario.save()
         return comentario
 
+class RespuestaForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['texto']
+        widgets = {
+            'texto': forms.Textarea(attrs={
+                'rows': 2, 
+                'placeholder': 'Escribe una respuesta...', 
+                'class': 'respuesta-textarea'
+            })
+        }

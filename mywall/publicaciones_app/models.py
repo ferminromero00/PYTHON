@@ -23,8 +23,7 @@ class Comentario(models.Model):
     publicacion = models.ForeignKey(Publicacion, on_delete=models.SET_NULL, null=True, blank=True, related_name="publicacion")
     texto = models.CharField(max_length=1024)
     fecha = fecha = models.DateField(auto_now_add=True)
-    # Más las propiedades que consideres
-
+    padre = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='respuestas')
 
 
 
