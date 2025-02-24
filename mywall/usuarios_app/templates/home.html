@@ -2,9 +2,8 @@
 
 <!-- Formulario para escribir una publicación -->
 <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Publicar</button>
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Publicar</button>
 </form>
 
 <hr />
@@ -13,29 +12,31 @@
 <h2>Tus Publicaciones</h2>
 {% for publicacion in publicaciones %}
 <div>
-    <p><strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}</p>
-    <p>{{ publicacion.contenido }}</p>
-    
-    <!-- Mostrar comentarios -->
-    <h4>Comentarios:</h4>
-    {% for comentario in publicacion.comentarios.all %}
-        <p><strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}</p>
-    {% empty %}
-        <p>No hay comentarios aún.</p>
-    {% endfor %}
+  <p>
+    <strong>{{ publicacion.autor.username }}</strong> - {{ publicacion.fecha }}
+  </p>
+  <p>{{ publicacion.contenido }}</p>
 
-    <!-- Formulario para comentar -->
-    <form method="POST" action="{% url 'comentar_publicacion' publicacion.id %}">
-        {% csrf_token %}
-        {{ comentario_form.as_p }}
-        <button type="submit">Comentar</button>
-    </form>
+  <h4>Comentarios:</h4>
+  {% for comentario in publicacion.comentarios.all %}
+  <p>
+    <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}
+  </p>
+  {% empty %}
+  <p>No hay comentarios aún.</p>
+  {% endfor %}
 
-    <!-- Botón para borrar -->
-    <form method="POST" action="{% url 'borrar_publicacion' publicacion.id %}">
-        {% csrf_token %}
-        <button type="submit">Borrar</button>
-    </form>
+  <!-- Formulario para comentar -->
+  <form method="POST" action="{% url 'comentar_publicacion' publicacion.id %}">
+    {% csrf_token %} {{ comentario_form.as_p }}
+    <button type="submit">Comentar</button>
+  </form>
+
+  <!-- Botón para borrar -->
+  <form method="POST" action="{% url 'borrar_publicacion' publicacion.id %}">
+    {% csrf_token %}
+    <button type="submit">Borrar</button>
+  </form>
 </div>
 <hr />
 {% empty %}
