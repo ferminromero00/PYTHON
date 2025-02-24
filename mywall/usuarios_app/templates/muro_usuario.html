@@ -78,8 +78,7 @@
       <h4>Comentarios:</h4>
       {% for comentario in publicacion.publicacion.all %}
       <p>
-        <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto
-        }}
+        <strong>{{ comentario.contacto.username }}</strong>: {{comentario.texto}}
       </p>
       {% empty %}
       <p>No hay comentarios aún.</p>
