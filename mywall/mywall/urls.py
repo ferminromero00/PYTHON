@@ -23,9 +23,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('registro/', registro, name='registro'),
-    path('login/', iniciar_sesion, name='login'),
+    path('', iniciar_sesion, name='login'),  # Cambiado a ruta raíz
     path('logout/', cerrar_sesion, name='logout'),
-    path('/', home, name='home'),
+    path('home/', home, name='home'),  # Movido home a /home/
     path('borrar/<int:id>/', borrar_publicacion, name='borrar_publicacion'),
     path('muro/<str:username>/', muro_usuario, name='muro_usuario'),
     path('comentar/<int:publicacion_id>/', comentar_publicacion, name='comentar_publicacion'),
