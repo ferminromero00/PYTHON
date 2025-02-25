@@ -14,48 +14,96 @@
   }
 
   .back-link {
-    color: #3498db;
+    background-color: #3498db;
+    color: white;
     text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-size: 0.85em;
   }
 
   .back-link:hover {
-    color: #2980b9;
+    background-color: #2980b9;
   }
 
   .post {
     background-color: #fff;
-    padding: 20px;
+    padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
+    margin-bottom: 15px;
   }
 
   .post-header {
     color: #2c3e50;
-    margin-bottom: 10px;
+    font-size: 0.9em;
+    margin-bottom: 5px;
   }
 
   .comments-section {
     background-color: #f8f9fa;
-    padding: 15px;
+    padding: 10px;
     border-radius: 6px;
     margin: 10px 0;
+    font-size: 0.85em;
   }
 
   .btn {
     background-color: #3498db;
     color: white;
     border: none;
-    padding: 8px 16px;
+    padding: 6px 12px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-size: 0.85em;
   }
 
   .btn:hover {
     background-color: #2980b9;
+  }
+
+  .comentario {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-left: 3px solid #3498db;
+  }
+
+  .btn-responder {
+    background: none;
+    border: none;
+    color: #3498db;
+    cursor: pointer;
+    font-size: 0.8em;
+    margin-left: 10px;
+  }
+
+  .respuesta-form {
+    margin: 10px 0;
+    padding-left: 20px;
+  }
+
+  .respuestas {
+    margin-top: 10px;
+    padding-left: 20px;
+    border-left: 2px solid #eee;
+  }
+
+  .post-image img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 10px;
+  }
+
+  .post-video {
+    margin: 15px 0;
+  }
+
+  .post-video video {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 </style>
 
@@ -73,21 +121,59 @@
     </p>
     <p>{{ publicacion.contenido }}</p>
 
+    {% if publicacion.imagen %}
+    <div class="post-image">
+      <img src="{{ publicacion.imagen.url }}" alt="Imagen de la publicación">
+    </div>
+    {% endif %}
+
+    {% if publicacion.video %}
+    <div class="post-video">
+      <video controls>
+        <source src="{{ publicacion.video.url }}" type="video/mp4">
+        Tu navegador no soporta el elemento video.
+      </video>
+    </div>
+    {% endif %}
+
     <div class="comments-section">
       <h4>Comentarios:</h4>
       {% for comentario in publicacion.publicacion.all %}
-      <p>
-        <strong>{{ comentario.contacto.username }}</strong>: {{comentario.texto}}
-      </p>
+      {% if not comentario.padre %}
+      <div class="comentario">
+        <p>
+          <strong>{{ comentario.contacto.username }}</strong>: {{ comentario.texto }}
+          <button type="button" class="btn-responder" onclick="toggleRespuestaForm('{{ comentario.id }}')">
+            Responder
+          </button>
+        </p>
+
+        <div id="respuesta-form-{{ comentario.id }}" class="respuesta-form">
+          <form method="POST" action="{% url 'responder_comentario' comentario.id %}">
+            {% csrf_token %}
+            <textarea name="texto" class="respuesta-textarea" rows="2" placeholder="Escribe una respuesta..."></textarea>
+            <button type="submit" class="btn">Enviar respuesta</button>
+          </form>
+        </div>
+
+        <div class="respuestas">
+          {% for respuesta in comentario.respuestas.all %}
+          <div class="comentario">
+            <p>
+              <strong>{{ respuesta.contacto.username }}</strong>: {{ respuesta.texto }}
+            </p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
       {% empty %}
       <p>No hay comentarios aún.</p>
       {% endfor %}
 
-      <form
-        method="POST"
-        action="{% url 'comentar_publicacion' publicacion.id %}"
-      >
-        {% csrf_token %} {{ comentario_form.as_p }}
+      <form method="POST" action="{% url 'comentar_publicacion' publicacion.id %}">
+        {% csrf_token %}
+        {{ comentario_form.as_p }}
         <button type="submit" class="btn">Comentar</button>
       </form>
     </div>
@@ -96,3 +182,18 @@
   <p>No hay publicaciones.</p>
   {% endfor %}
 </div>
+
+<script>
+function toggleRespuestaForm(comentarioId) {
+  const form = document.getElementById(`respuesta-form-${comentarioId}`);
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+// Ocultar todos los formularios de respuesta inicialmente
+document.addEventListener('DOMContentLoaded', function() {
+  const respuestaForms = document.querySelectorAll('.respuesta-form');
+  respuestaForms.forEach(form => {
+    form.style.display = 'none';
+  });
+});
+</script>
