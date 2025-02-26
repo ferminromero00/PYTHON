@@ -21,5 +21,7 @@ from usuarios_app import views
 urlpatterns = [
     path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('alojamientos/', views.alojamientos, name='alojamientos'),
+    path('logout/', views.cerrar_sesion, name='logout'),
+
 ]
 
