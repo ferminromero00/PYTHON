@@ -17,12 +17,12 @@ Including another URLconf
 from django.contrib.auth import views as auth_views
 from django.urls import path
 from usuarios_app import views
-from alojamientos_app import views
+from usuarios_app.views import mis_alojamientos
 
 urlpatterns = [
     path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('alojamientos/', views.alojamientos, name='alojamientos'),
     path('logout/', views.cerrar_sesion, name='logout'),
-    path('mis-alojamientos/', views.mis_alojamientos, name='mis_alojamientos'),
+    path('alojamientos/', views.mis_alojamientos, name='alojamientos'),
 ]
 
