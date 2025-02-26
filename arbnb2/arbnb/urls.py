@@ -25,5 +25,7 @@ urlpatterns = [
     path('alojamientos/', views.mis_alojamientos, name='alojamientos'),
     path('editar_alojamiento/<int:id>/', views.editar_alojamiento, name='editar_alojamiento'),
     path('ver_alquileres/<int:id>/', views.ver_alquileres, name='ver_alquileres'),
+    path('crear_alojamiento', views.crear_alojamiento, name='crear_alojamiento'),
+
 ]
 
