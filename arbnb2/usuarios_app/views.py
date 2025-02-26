@@ -46,3 +46,26 @@ def crear_alojamiento(request):
         form = AlojamientoForm()
     
     return render(request, 'crear_alojamiento.html', {'form': form})
+
+def alquilar(request):
+    if request.method == 'POST':
+        form = AlquilerForm(request.POST)
+        if form.is_valid():
+            alojamiento = form.cleaned_data('alojamiento')
+            desde = form.cleaned_data('desde')
+            hasta = form.cleaned_data('hasta')
+            
+            solapado = Alquiler.objects.filter(alojamiento=alojamiento, desde__lt=hasta, hasta__gt=desde).exists()
+            
+            if solapado: 
+                form.add_error(None, "El alquiler se solapa con otro")
+            else:
+                alquiler = form.save(commit=False)
+                alquiler.cliente = request.user
+                alquiler.save()
+                return redirect('alquileres')
+            
+    else:
+        form = AlquilerForm()
+    
+    return render(request, 'alquilar.html', {'form': form})
