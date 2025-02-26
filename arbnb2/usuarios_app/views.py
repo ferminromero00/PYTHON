@@ -18,7 +18,8 @@ def mis_alojamientos(request):
 
 def ver_alquileres(request, id):
     alquileres = Alquiler.objects.filter(alojamiento_id=id)
-    return render(request, 'ver_alquileres.html', {'alquileres': alquileres})
+    alojamiento = Alojamiento.objects.get(id=id)
+    return render(request, 'ver_alquileres.html', {'alquileres': alquileres, 'alojamiento': alojamiento})
 
 def editar_alojamiento(request, id):
     alojamiento = get_object_or_404(Alojamiento, id=id, propietario=request.user)
