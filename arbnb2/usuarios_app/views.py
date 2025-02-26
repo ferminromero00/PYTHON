@@ -33,3 +33,16 @@ def editar_alojamiento(request, id):
         form = AlojamientoForm(instance=alojamiento)
     
     return render(request, 'editar_alojamiento.html', {'form': form, 'alojamiento': alojamiento})
+
+def crear_alojamiento(request):
+    if request.method == 'POST':
+        form = AlojamientoForm(request.POST)
+        if form.is_valid():
+            alojamiento = form.save(commit=False)
+            alojamiento.propietario = request.user
+            alojamiento.save()
+            return redirect('alojamientos')
+    else:
+        form = AlojamientoForm()
+    
+    return render(request, 'crear_alojamiento.html', {'form': form})
