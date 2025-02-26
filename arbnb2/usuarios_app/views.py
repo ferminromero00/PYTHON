@@ -51,9 +51,9 @@ def alquilar(request):
     if request.method == 'POST':
         form = AlquilerForm(request.POST)
         if form.is_valid():
-            alojamiento = form.cleaned_data('alojamiento')
-            desde = form.cleaned_data('desde')
-            hasta = form.cleaned_data('hasta')
+            alojamiento = form.cleaned_data['alojamiento']
+            desde = form.cleaned_data['desde']
+            hasta = form.cleaned_data['hasta']
             
             solapado = Alquiler.objects.filter(alojamiento=alojamiento, desde__lt=hasta, hasta__gt=desde).exists()
             
