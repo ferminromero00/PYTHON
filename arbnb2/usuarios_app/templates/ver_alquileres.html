@@ -14,8 +14,8 @@
     <tbody>
       {% for alquiler in alquileres %}
         <tr>
-          <td>{{ alquiler.inquilino.first_name }}</td>
-          <td>{{ alquiler.inquilino.last_name }}</td>
+          <td>{{ alquiler.cliente.first_name }}</td>
+          <td>{{ alquiler.cliente.last_name }}</td>
           <td>{{ alquiler.desde }}</td>
           <td>{{ alquiler.hasta }}</td>
         </tr>
