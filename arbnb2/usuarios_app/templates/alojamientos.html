@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Bienvenido, {{ request.user.username }}!</h2> <!-- Saludo al usuario logueado -->
 <h2>Mis alojamientos</h2>
 
 <table class="table table-striped">
@@ -15,16 +18,8 @@
       <td>{{ alojamiento.descripcion }}</td>
       <td>${{ alojamiento.precio }}</td>
       <td>
-        <a
-          href="{% url 'editar_alojamiento' alojamiento.id %}"
-          class="btn btn-primary btn-sm"
-          >Editar</a
-        >
-        <a
-          href="{% url 'ver_alquileres' alojamiento.id %}"
-          class="btn btn-secondary btn-sm"
-          >Ver Alquileres</a
-        >
+        <a href="{% url 'editar_alojamiento' alojamiento.id %}" class="btn btn-primary btn-sm">Editar</a>
+        <a href="{% url 'ver_alquileres' alojamiento.id %}" class="btn btn-secondary btn-sm">Ver Alquileres</a>
       </td>
     </tr>
     {% empty %}
