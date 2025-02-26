@@ -63,7 +63,7 @@ def alquilar(request):
                 alquiler = form.save(commit=False)
                 alquiler.cliente = request.user
                 alquiler.save()
-                return redirect('alquileres')
+                return redirect('alquilar')
             
     else:
         form = AlquilerForm()
