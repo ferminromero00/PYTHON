@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Alquileres de {{ alojamiento.descripcion }}</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Cliente</th>
+      <th>Fecha de inicio</th>
+      <th>Fecha de fin</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for alquiler in alquileres %}
+    <tr>
+      <td>{{ alquiler.cliente.username }}</td>
+      <td>{{ alquiler.desde }}</td>
+      <td>{{ alquiler.hasta }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="3" class="text-center">No hay alquileres para este alojamiento.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
