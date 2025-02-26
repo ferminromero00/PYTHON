@@ -22,6 +22,6 @@ from usuarios_app.views import mis_alojamientos
 urlpatterns = [
     path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', views.cerrar_sesion, name='logout'),
-    path('alojamientos/', views.mis_alojamientos, name='mis_alojamientos'),
+    path('alojamientos/', views.mis_alojamientos, name='alojamientos'),
 ]
 
