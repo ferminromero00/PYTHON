@@ -5,6 +5,8 @@
   <table class="table table-striped">
     <thead>
       <tr>
+        <th>Nombre</th>
+        <th>Apellidos</th>
         <th>Desde</th>
         <th>Hasta</th>
       </tr>
@@ -12,6 +14,8 @@
     <tbody>
       {% for alquiler in alquileres %}
         <tr>
+          <td>{{ alquiler.inquilino.first_name }}</td>
+          <td>{{ alquiler.inquilino.last_name }}</td>
           <td>{{ alquiler.desde }}</td>
           <td>{{ alquiler.hasta }}</td>
         </tr>
