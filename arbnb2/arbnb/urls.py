@@ -23,5 +23,7 @@ urlpatterns = [
     path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', views.cerrar_sesion, name='logout'),
     path('alojamientos/', views.mis_alojamientos, name='alojamientos'),
+    path('editar_alojamiento/<int:id>/', views.editar_alojamiento, name='editar_alojamiento'),
+    path('ver_alquileres/<int:id>/', views.ver_alquileres, name='ver_alquileres'),
 ]
 
