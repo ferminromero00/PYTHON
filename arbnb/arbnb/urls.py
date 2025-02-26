@@ -20,5 +20,5 @@ from usuarios_app.views import iniciar_sesion
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', iniciar_sesion, name='login'),
+    path('/', iniciar_sesion, name='login'),
 ]

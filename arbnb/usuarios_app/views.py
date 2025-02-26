@@ -17,3 +17,7 @@ def iniciar_sesion(request):
         else:
             form = AuthenticationForm()
             return render(request, "login.html", {'form': form})
+        
+def cerrar_sesion(request):
+    logout(request)
+    return redirect("login")
