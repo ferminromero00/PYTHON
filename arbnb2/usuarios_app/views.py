@@ -13,4 +13,4 @@ def cerrar_sesion(request):
 
 def mis_alojamientos(request):
     alojamientos = Alojamiento.objects.filter(propietario=request.user)
-    return render(request, 'mis_alojamientos.html', {'alojamientos': alojamientos})
+    return render(request, 'alojamientos.html', {'alojamientos': alojamientos})
